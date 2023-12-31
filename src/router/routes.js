@@ -1,22 +1,33 @@
+import Home from 'pages/HomePage/IndexPage.vue';
+import Login from 'src/pages/LoginP.vue';
+import Register from 'src/pages/RegisterP.vue';
+
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/HomePage/IndexPage.vue') }
+      { 
+        path: '', 
+        component: Home
+      }
     ]
   },
   {
-    path: '/test',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '/test', component: () => import('pages/IndexPage.vue') }
-    ]
+    path: '/login',
+    component: Login,
+  },
+  {
+    path: '/register',
+    component: Register,
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
+
+
+
+
+  
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')

@@ -51,6 +51,42 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
+    title: 'Mi perfil',
+    caption: 'User',
+    icon: 'person',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
+    title: 'Mis intereses',
+    caption: 'Que hay hoy de nuevo?',
+    icon: 'public',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
+    title: 'Amigos',
+    caption: 'Tu lista de amigos y mas posibles amigos',
+    icon: 'emoji_people',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
+    title: 'Mis grupos',
+    caption: 'Administra tus grupos',
+    icon: 'gavel',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
+    title: 'Mensajes',
+    caption: 'Habla con un amigo 😁',
+    icon: 'chat',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
+    title: 'Configuración',
+    caption: '',
+    icon: 'settings',
+    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  },
+  {
     title: 'Mi LinkedIn',
     caption: 'Jorge León Caballero',
     icon: 'work',
