@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-grey-9">
-        
+    <div class="bg-black">
+        Hola mundo!Q!!!
     </div>
 </template>
 <script>
