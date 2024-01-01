@@ -1,11 +1,9 @@
 import Home from 'pages/HomePage/IndexPage.vue';
-import Login from 'src/pages/LoginP.vue';
-import Register from 'src/pages/RegisterP.vue';
-
+import Login from 'src/pages/Login/LoginP.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/test',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
@@ -15,12 +13,8 @@ const routes = [
     ]
   },
   {
-    path: '/login',
+    path: '/',
     component: Login,
-  },
-  {
-    path: '/register',
-    component: Register,
   },
 
 
