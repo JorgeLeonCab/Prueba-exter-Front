@@ -7,8 +7,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
-        path: '', 
-        component: Home
+        path: '/test', 
+        component: Home,
+        meta: { requiresAuth: true }
       }
     ]
   },

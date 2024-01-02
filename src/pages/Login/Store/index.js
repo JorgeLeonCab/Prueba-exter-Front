@@ -3,14 +3,18 @@ import { api } from 'boot/axios'
 
 export const useLoginStore = defineStore('login', {
   state: () => ({
-
+    register_user: null,
+    login_user: null,
   }),
   actions: {
     async register(body) {
-        console.log('body: ',body);
-        const response = await api.get('/register', { params : body});
-        console.log(response);
+        const response = await api.post('/register', body);
         return response;
+    },
+
+    async login(body) {
+      const response = await api.post('/login', body);
+      return response;
     }
   },
 });

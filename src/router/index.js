@@ -26,5 +26,16 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
+  Router.beforeEach((to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token') !== null;
+  
+    if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+      console.log('NO AUTORIZADO');
+      next('/');
+    } else {
+      next();
+    }
+  });
+
   return Router
 })
