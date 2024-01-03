@@ -74,7 +74,7 @@ export default defineComponent({
                 if (success) {
                     setToken(data.data.access_token);
                     setUser(data.data.user);
-                    instance.proxy.$router.push("/test");
+                    instance.proxy.$router.push("/user/home");
                 } else {
                     Notify.create({
                         type: 'negative',

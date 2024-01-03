@@ -4,7 +4,7 @@
       :loader="loader"
     />
     <q-layout view="lHh Lpr lFf">
-      <q-header elevated>
+      <q-header elevated class="bg-[#D90429]">
         <q-toolbar>
           <q-btn
             flat
@@ -27,9 +27,11 @@
         v-model="leftDrawerOpen"
         show-if-above
         bordered
+        class="bg-[#2B2D42] text-white"
       >
         <q-list>
           <q-item-label
+            class="text-white"
             header
           >
             Menu
@@ -45,7 +47,7 @@
       </q-drawer>
   
       <q-page-container>
-        <router-view />
+        <router-view class="min-w-screen min-h-screen bg-[#3C3E53]" />
       </q-page-container>
     </q-layout>
   </div>
@@ -57,6 +59,12 @@ import EssentialLink from 'components/EssentialLink.vue'
 import Loader from 'src/components/Loader.vue'
 
 const linksList = [
+  {
+    title: 'Inicio',
+    caption: 'Ir al Inicio',
+    icon: 'home',
+    link: 'http://localhost:9000/#/user/home'
+  },
   {
     title: 'Mi perfil',
     caption: 'User',
@@ -114,10 +122,6 @@ export default defineComponent({
   components: {
     EssentialLink,
     Loader
-  },
-
-  mounted () {
-    this.leftDrawerOpen = false;
   },
 
   setup () {

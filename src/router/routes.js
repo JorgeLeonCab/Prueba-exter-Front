@@ -3,11 +3,11 @@ import Login from 'src/pages/Login/LoginP.vue';
 
 const routes = [
   {
-    path: '/test',
+    path: '/user',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
-        path: '/test', 
+        path: 'home', 
         component: Home,
         meta: { requiresAuth: true }
       }

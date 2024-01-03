@@ -66,7 +66,7 @@ export default defineComponent({
 
         onMounted(() => {
             if(user !== null && token !== null) {
-                instance.proxy.$router.push('/test');
+                instance.proxy.$router.push('/user/home');
             }
         })
 

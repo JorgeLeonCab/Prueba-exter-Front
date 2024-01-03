@@ -15,7 +15,7 @@
 
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label class="text-white" caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
   <q-item
@@ -34,7 +34,7 @@
 
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label class="text-red-400" caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
