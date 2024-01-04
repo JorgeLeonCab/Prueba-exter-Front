@@ -8,8 +8,7 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     setToken(token) {
-      let string_token = JSON.stringify(token);
-      this.token = string_token;
+      this.token = token;
       localStorage.setItem("token", this.token);
     },
     setUser(user) {
