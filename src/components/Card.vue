@@ -76,6 +76,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useHome } from '../pages/HomePage/Composables/useHomeStore';
+import { useAuth } from 'src/stores/Auth/Composables/useAuthStore';
 import { Notify } from 'quasar';
 export default defineComponent({
     name: 'HomePage',
@@ -94,11 +95,11 @@ export default defineComponent({
     ],
     setup(props, { emit }) {
         const { postComment } = useHome();
+        const { token, user } = useAuth();
         const show_button_comment = ref([]);
         const comment = ref([]);
         const form = ref({
             content: '',
-            user_id: 1,
             post_id: 0
         })
 
@@ -111,14 +112,15 @@ export default defineComponent({
             emit('loaderStatus', true);
             form.value.post_id = card_id;
             form.value.content = comment.value[card_id];
+            form.value.user_id = JSON.parse(user).id;
 
-            const { data, success } = await postComment(form.value);
+            const { data, success } = await postComment(form.value, token);
 
             if (success) {
                 comment.value[card_id] = '';
                 form.value = {
                     content: '',
-                    user_id: 1,
+                    user_id: 0,
                     post_id: 0
                 }
             } else {
