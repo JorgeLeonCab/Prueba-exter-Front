@@ -187,7 +187,7 @@ export default defineComponent({
 
         const handleGetPosts = async () => {
             loader.value = true;
-            let { data, success } = await getPosts();
+            let { data, success } = await getPosts(token);
             if (success) {
                 posts.value = data;
             } else {
@@ -285,7 +285,7 @@ export default defineComponent({
         }
     },
     async mounted() {
-        this.handleGetPosts(this.token);
+        this.handleGetPosts();
     }
 
 })

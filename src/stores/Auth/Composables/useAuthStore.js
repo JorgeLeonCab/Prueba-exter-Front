@@ -16,12 +16,17 @@ export function useAuth() {
 
     const clearAuth = () => {
         authStore.clearAuth();
-    }
+    };
+
+    const logOut = async (user_id) => {
+        await authStore.logOut(user_id);
+    };
 
     return {
         setUser,
         setToken,
         clearAuth,
+        logOut,
         token,
         user
     }

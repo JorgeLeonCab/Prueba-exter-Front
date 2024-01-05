@@ -80,13 +80,15 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const instance = getCurrentInstance();
-    const { clearAuth } = useAuth();
+    const { logOut, user, clearAuth } = useAuth();
 
     const handleLogOut = () => {
       emit('handleLoader', true);
+      let user_id = JSON.parse(user).id;
       clearAuth();
-      emit('handleLoader', false);
       instance.proxy.$router.push("/");
+      logOut(user_id);
+      emit('handleLoader', false);
     }
 
     return {

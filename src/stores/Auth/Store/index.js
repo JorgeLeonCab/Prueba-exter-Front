@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { getCurrentInstance } from 'vue'
 import { api } from 'boot/axios'
 
 export const useAuthStore = defineStore('auth', {
@@ -22,5 +23,8 @@ export const useAuthStore = defineStore('auth', {
       this.user = null;
       localStorage.removeItem('user');
     },
+    async logOut(user_id) {
+      await api.post(`/logout/${user_id}`);
+    }
   },
 });
