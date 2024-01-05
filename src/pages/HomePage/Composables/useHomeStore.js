@@ -19,9 +19,24 @@ export function useHome() {
     }
   };
 
-  const getPosts = async () => {
+  const getPosts = async (token) => {
     try {
-      const { data } = await homeStore.getPosts();
+      const { data } = await homeStore.getPosts(token);
+      return {
+          data: data,
+          success: true
+      };
+    } catch (err) {
+      return {
+          data: err,
+          success: false
+      };
+    }
+  };
+
+  const postComment = async (body, token) => {
+    try {
+      const { data } = await homeStore.postComment(body, token);
       return {
           data: data,
           success: true
@@ -34,16 +49,16 @@ export function useHome() {
     }
   };
 
-  const postComment = async (body) => {
+  const getCommentsById = async (id, token) => {
     try {
-      const { data } = await homeStore.postComment(body);
+      const { data } = await homeStore.getCommentsById(id, token);
       return {
           data: data,
           success: true
       };
     } catch (err) {
       return {
-          data: err.response.data,
+          data: err,
           success: false
       };
     }
@@ -52,6 +67,7 @@ export function useHome() {
   return {
     sendForm,
     getPosts,
-    postComment
+    postComment,
+    getCommentsById
   };
 }

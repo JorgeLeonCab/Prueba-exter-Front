@@ -31,8 +31,19 @@
             </q-card-section>
 
             <q-separator class="mx-4" />
-
-            <q-card-section align="right">
+            
+            <q-card-section align="right" v-if="showComment">
+                <q-btn 
+                    @click="openDialogComments(item.id)"
+                    class="rounded-xl italic" 
+                    flat 
+                    label="Comentarios" 
+                    color="black" 
+                    v-close-popup 
+                />
+            </q-card-section>
+        </q-card>
+            <!-- <q-card-section align="right">
                 <q-btn 
                     v-if="!show_button_comment[item.id]"
                     @click="handleShowCommentForm(item.id, false)"
@@ -68,8 +79,33 @@
                         v-close-popup 
                     />
                 </div>
-            </q-card-section>
-        </q-card>
+                <div v-else>
+                    <q-input
+                        v-model="comment[item.id]"
+                        label="Comentario"
+                        type="textarea"
+                        rows="1"
+                        class="bg-white rounded-lg px-2 py-0 w-auto"
+                        :rules="[ val => val && val.length > 0 || 'Ingrese un comentario']"
+                    />
+                    <q-btn 
+                        @click="handleShowCommentForm(item.id, false)"
+                        class="rounded-xl italic" 
+                        flat 
+                        label="Cancelar" 
+                        color="red" 
+                        v-close-popup 
+                    />
+                    <q-btn 
+                        @click="handleShowCommentForm(item.id, true)"
+                        class="rounded-xl italic" 
+                        flat 
+                        label="Enviar" 
+                        color="primary" 
+                        v-close-popup 
+                    />
+                </div>
+            </q-card-section> -->
     </div>
 </template>
 
@@ -88,10 +124,15 @@ export default defineComponent({
         data: {
             type: Object,
             default: null
+        },
+        showComment: {
+            type: Boolean,
+            default: false
         }
     },
     emits: [
-        'loaderStatus'
+        'loaderStatus',
+        'handleOpenCommentDialog'
     ],
     setup(props, { emit }) {
         const { postComment } = useHome();
@@ -102,6 +143,10 @@ export default defineComponent({
             content: '',
             post_id: 0
         })
+
+        const openDialogComments = (card_id) => {
+            emit('handleOpenCommentDialog', {dialog: true, card_id: card_id});
+        }
 
         const handleShowCommentForm = (card_id, send_comment) => {
             show_button_comment.value[card_id] = !show_button_comment.value[card_id];
@@ -129,9 +174,8 @@ export default defineComponent({
                     message: data.message
                 });
             }
-
-            emit('loaderStatus', false);
             // handleGetPosts();
+            emit('loaderStatus', false);
         };
 
         return {
@@ -139,7 +183,8 @@ export default defineComponent({
             show_button_comment,
             comment,
             handlePostComment,
-            handleShowCommentForm
+            handleShowCommentForm,
+            openDialogComments
         }
     }
 })

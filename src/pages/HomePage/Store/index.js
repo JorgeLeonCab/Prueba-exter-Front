@@ -16,13 +16,33 @@ export const useHomeStore = defineStore('home', {
       return response;
     },
 
-    async getPosts() {
-      const response = await api.get('/post')
+    async getPosts(token) {
+      const response = await api.get('/post', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
       return response;
     },
 
-    async postComment(body) {
-      const response = await api.post('/comments', body);
+    async postComment(body, token) {
+      const response = await api.post('/comments', body, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return response;
+    },
+
+    async getCommentsById(id, token) {
+      const response = await api.get(`/comments/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
       return response;
     }
   },

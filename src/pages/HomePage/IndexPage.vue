@@ -51,16 +51,46 @@
             </q-card>
         </q-dialog>
 
-        <content-card
-            v-if="posts != [] " 
-            :data="posts"
-            @loaderStatus="loaderStatus"
-        />
-        <div v-else>
+        <q-dialog v-model="commentDialog">
+            <q-card class="bg-[#EDF2F4] w-2/3 mx-auto mt-8 border-[#D90429] rounded-xl shadow-xl" flat bordered>
+                <q-item>
+                    <q-item-section avatar>
+                        <q-avatar>
+                            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        </q-avatar>
+                        user
+                    </q-item-section>
+                    <q-card-section class="text-justify">
+                        content
+                    </q-card-section>
+                </q-item>
+        
+                <q-card-section horizontal>
+                    <q-card-section>
+                        user
+                    </q-card-section>
+        
+                    <q-separator class="m-2" color="red" vertical />
+        
+                    <q-card-section class="text-justify">
+                        content
+                    </q-card-section>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
+
+        <div v-if="posts === undefined" >
             <q-card class="bg-[#EDF2F4] w-2/3 mx-auto  border-[#D90429] rounded-xl shadow-xl" flat bordered>
                 Ahora no hay publicaciones :c
             </q-card>
         </div>
+        <content-card
+            v-else
+            :data="posts"
+            :showComment="true"
+            @loaderStatus="loaderStatus"
+            @handleOpenCommentDialog="handleOpenCommentDialog"
+        />
 
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn 
@@ -88,11 +118,13 @@ export default defineComponent({
         Loader
     },
     setup() {
-        const { sendForm, getPosts } = useHome();
+        const { sendForm, getPosts, getCommentsById } = useHome();
         const { token, user } = useAuth();
+        const card_id = ref(0);
         const posts = ref();
         const loader = ref(false);
         const dialogModal = ref(false);
+        const commentDialog = ref(false);
         const pub_form = ref({
             title: '',
             content: ''
@@ -137,19 +169,41 @@ export default defineComponent({
             loader.value = payload;
         }
 
+        const handleOpenCommentDialog = async (payload) => {
+            commentDialog.value = payload.dialog;
+            card_id.value = payload.card_id;
+            const { data, success } = await getCommentsById(card_id.value, token);
+            if (success) {
+                console.log(data);
+                // handleGetPosts();
+                // pub_form.value = {
+                //     title: "",
+                //     content: ""
+                // }
+            } else {
+                Notify.create({
+                    type: 'negative',
+                    message: data.message
+                });
+            }
+            // loader.value = false;
+        }
+
 
         return {
             handleGetPosts,
             handleCreatePost,
+            handleOpenCommentDialog,
             loaderStatus,
             loader,
             dialogModal,
+            commentDialog,
             pub_form,
             posts
         }
     },
     async mounted() {
-        this.handleGetPosts();
+        this.handleGetPosts(this.token);
     }
 
 })
