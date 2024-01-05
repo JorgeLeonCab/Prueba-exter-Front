@@ -1,5 +1,5 @@
 <template>
-    <div v-for="item in data" :key="item">
+    <div v-for="(item, indice) in data" :key="indice">
         <q-card class="bg-[#EDF2F4] w-2/3 mx-auto mt-8 border-[#D90429] rounded-xl shadow-xl" flat bordered>
             <q-item>
                 <q-item-section avatar>
@@ -34,7 +34,7 @@
             
             <q-card-section align="right" v-if="showComment">
                 <q-btn 
-                    @click="openDialogComments(item.id)"
+                    @click="openDialogComments(indice)"
                     class="rounded-xl italic" 
                     flat 
                     label="Comentarios" 

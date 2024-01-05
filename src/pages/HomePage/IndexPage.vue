@@ -51,31 +51,78 @@
             </q-card>
         </q-dialog>
 
-        <q-dialog v-model="commentDialog">
-            <q-card class="bg-[#EDF2F4] w-2/3 mx-auto mt-8 border-[#D90429] rounded-xl shadow-xl" flat bordered>
-                <q-item>
-                    <q-item-section avatar>
-                        <q-avatar>
-                            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                        </q-avatar>
-                        user
-                    </q-item-section>
-                    <q-card-section class="text-justify">
-                        content
-                    </q-card-section>
-                </q-item>
-        
-                <q-card-section horizontal>
-                    <q-card-section>
-                        user
-                    </q-card-section>
-        
-                    <q-separator class="m-2" color="red" vertical />
-        
-                    <q-card-section class="text-justify">
-                        content
-                    </q-card-section>
-                </q-card-section>
+        <q-dialog v-model="commentDialog" class="rounded-2xl shadow-2xl">
+            <q-card class="bg-[#EDF2F4] w-2/3 mx-auto mt-8 border-[#D90429] h-2/5" flat bordered>
+                <Loader
+                    :loader="loaderDialog"
+                />
+                <div>
+                    <div class="bg-[#e1e3e4]">
+                        <q-item>
+                            <q-item-section avatar>
+                                <q-avatar>
+                                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                                </q-avatar>
+                            </q-item-section>
+                
+                            <q-item-section>
+                                <q-item-label>
+                                    {{ posts[card_id].title }}
+                                </q-item-label>
+                                <q-item-label caption>
+                                    Subhead
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+                
+                        <q-card-section horizontal>
+                            <q-card-section>
+                                {{ posts[card_id].user.name }}
+                            </q-card-section>
+                
+                            <q-separator class="m-2" color="red" vertical />
+                
+                            <q-card-section class="text-justify">
+                                {{ posts[card_id].content }}
+                            </q-card-section>
+                        </q-card-section>
+                    </div>
+                    <div v-for="comment in comments_list" :key="comment" class="scroll-auto">
+                        <q-separator class="mx-2" color="red"/>  
+                        
+                        <q-item>
+                            <q-item-section avatar>
+                                <q-avatar class="mx-auto">
+                                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                                </q-avatar>
+                                <q-item-label caption class="pt-2">
+                                    {{ comment.user.name }}
+                                </q-item-label>
+                            </q-item-section>
+                            <q-separator class="m-2" color="red" vertical />
+                            <q-card-section class="text-justify">
+                                {{ comment.content }}
+                            </q-card-section>
+                        </q-item>
+                    </div>
+                    <div class="my-2">
+                        <q-input
+                            v-model="comment"
+                            label="Comentario"
+                            type="textarea"
+                            rows="1"
+                            class="bg-white rounded-lg px-2 py-0 w-[89%] inline-block"
+                        />
+                        <q-btn 
+                            @click="handlePostComment(card_id + 1)"
+                            class="rounded-xl italic w-[10%] inline-block h-auto" 
+                            flat 
+                            label="Enviar" 
+                            color="primary" 
+                        />
+                            <!-- v-close-popup  -->
+                    </div>
+                </div>
             </q-card>
         </q-dialog>
 
@@ -118,17 +165,24 @@ export default defineComponent({
         Loader
     },
     setup() {
-        const { sendForm, getPosts, getCommentsById } = useHome();
+        const { sendForm, getPosts, getCommentsById, postComment } = useHome();
         const { token, user } = useAuth();
         const card_id = ref(0);
         const posts = ref();
         const loader = ref(false);
         const dialogModal = ref(false);
         const commentDialog = ref(false);
+        const comment = ref('');
+        const comments_list = ref([]);
+        const loaderDialog = ref(false);
         const pub_form = ref({
             title: '',
             content: ''
         });
+        const form = ref({
+            content: '',
+            post_id: 0
+        })
 
 
         const handleGetPosts = async () => {
@@ -170,16 +224,13 @@ export default defineComponent({
         }
 
         const handleOpenCommentDialog = async (payload) => {
-            commentDialog.value = payload.dialog;
+            loader.value = true;
             card_id.value = payload.card_id;
-            const { data, success } = await getCommentsById(card_id.value, token);
+            const { data, success } = await getCommentsById(card_id.value + 1, token);
+            commentDialog.value = payload.dialog;
+            loader.value = false;
             if (success) {
-                console.log(data);
-                // handleGetPosts();
-                // pub_form.value = {
-                //     title: "",
-                //     content: ""
-                // }
+                comments_list.value = data;
             } else {
                 Notify.create({
                     type: 'negative',
@@ -189,17 +240,48 @@ export default defineComponent({
             // loader.value = false;
         }
 
+        const handlePostComment = async (card_id) => {
+            loaderDialog.value = true;
+            form.value.post_id = card_id;
+            form.value.content = comment.value;
+            form.value.user_id = JSON.parse(user).id;
+
+            const { data, success } = await postComment(form.value, token);
+            loaderDialog.value = false;
+            if (success) {
+                const { data } = await getCommentsById(card_id, token);
+                comments_list.value = data;
+                comment.value = '';
+                form.value = {
+                    content: '',
+                    user_id: 0,
+                    post_id: 0
+                }
+            } else {
+                Notify.create({
+                    type: 'negative',
+                    message: data.message
+                });
+            }
+            // handleGetPosts();
+        };
+
 
         return {
             handleGetPosts,
             handleCreatePost,
             handleOpenCommentDialog,
+            handlePostComment,
             loaderStatus,
+            comments_list,
             loader,
             dialogModal,
             commentDialog,
+            loaderDialog,
             pub_form,
-            posts
+            posts,
+            card_id,
+            comment
         }
     },
     async mounted() {
