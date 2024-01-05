@@ -43,69 +43,6 @@
                 />
             </q-card-section>
         </q-card>
-            <!-- <q-card-section align="right">
-                <q-btn 
-                    v-if="!show_button_comment[item.id]"
-                    @click="handleShowCommentForm(item.id, false)"
-                    class="rounded-xl italic" 
-                    flat 
-                    label="Comentarios" 
-                    color="black" 
-                    v-close-popup 
-                />
-                <div v-else>
-                    <q-input
-                        v-model="comment[item.id]"
-                        label="Comentario"
-                        type="textarea"
-                        rows="1"
-                        class="bg-white rounded-lg px-2 py-0 w-auto"
-                        :rules="[ val => val && val.length > 0 || 'Ingrese un comentario']"
-                    />
-                    <q-btn 
-                        @click="handleShowCommentForm(item.id, false)"
-                        class="rounded-xl italic" 
-                        flat 
-                        label="Cancelar" 
-                        color="red" 
-                        v-close-popup 
-                    />
-                    <q-btn 
-                        @click="handleShowCommentForm(item.id, true)"
-                        class="rounded-xl italic" 
-                        flat 
-                        label="Enviar" 
-                        color="primary" 
-                        v-close-popup 
-                    />
-                </div>
-                <div v-else>
-                    <q-input
-                        v-model="comment[item.id]"
-                        label="Comentario"
-                        type="textarea"
-                        rows="1"
-                        class="bg-white rounded-lg px-2 py-0 w-auto"
-                        :rules="[ val => val && val.length > 0 || 'Ingrese un comentario']"
-                    />
-                    <q-btn 
-                        @click="handleShowCommentForm(item.id, false)"
-                        class="rounded-xl italic" 
-                        flat 
-                        label="Cancelar" 
-                        color="red" 
-                        v-close-popup 
-                    />
-                    <q-btn 
-                        @click="handleShowCommentForm(item.id, true)"
-                        class="rounded-xl italic" 
-                        flat 
-                        label="Enviar" 
-                        color="primary" 
-                        v-close-popup 
-                    />
-                </div>
-            </q-card-section> -->
     </div>
 </template>
 

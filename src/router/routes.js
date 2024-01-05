@@ -1,5 +1,6 @@
 import Home from 'pages/HomePage/IndexPage.vue';
 import Login from 'src/pages/Login/LoginP.vue';
+import User from 'src/pages/UsersPage/indexPage.vue';
 
 const routes = [
   {
@@ -9,6 +10,17 @@ const routes = [
       { 
         path: 'home', 
         component: Home,
+        meta: { requiresAuth: true }
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { 
+        path: 'user', 
+        component: User,
         meta: { requiresAuth: true }
       }
     ]

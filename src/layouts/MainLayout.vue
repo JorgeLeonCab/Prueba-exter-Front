@@ -65,23 +65,23 @@ const linksList = [
     icon: 'home',
     link: 'http://localhost:9000/#/user/home'
   },
-  {
-    title: 'Mi perfil',
-    caption: 'User',
-    icon: 'person',
-    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
-  },
-  {
-    title: 'Amigos',
-    caption: 'Tu lista de amigos',
-    icon: 'emoji_people',
-    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
-  },
+  // {
+  //   title: 'Mi perfil',
+  //   caption: 'User',
+  //   icon: 'person',
+  //   link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  // },
+  // {
+  //   title: 'Amigos',
+  //   caption: 'Tu lista de amigos',
+  //   icon: 'emoji_people',
+  //   link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+  // },
   {
     title: 'Panel de administrador',
     caption: 'Administra a los usuarios',
     icon: 'gavel',
-    link: 'https://www.linkedin.com/in/jorge-le%C3%B3n-caballero-9883681b4/'
+    link: 'http://localhost:9000/#/admin/user'
   },
   {
     title: 'Mi LinkedIn',
